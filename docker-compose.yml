@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  web:
+    image: nginx:latest
+    ports:
+        - "8090:80"
+    volumes:
+        - ./silvers_web:/var/www/html/silvers_web
+        - ./nginx/site.conf:/etc/nginx/conf.d/site.conf
+    links:
+        - php
+  php:
+    build: .
+    volumes:
+      - ./silvers_web:/var/www/html/silvers_web
+      - ./silvers_web/logs:/var/log/php-fpm
+  # redis:
+  #   image: "redis:alpine"
+  #   ports:
+  #     - "6379:6379"
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'ss_db'
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: master_user
+      MYSQL_PASSWORD: Platinum01#
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8099:80
+    environment:
+      - PMA_ARBITRARY=1 
