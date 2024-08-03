@@ -6,6 +6,8 @@ RUN apt-get install -y libxml2-dev \
     && docker-php-ext-install soap \
     && docker-php-ext-install xsl
 RUN docker-php-ext-install mysqli
+RUN docker-php-ext-install pdo
+RUN docker-php-ext-install pdo_mysql
 
 RUN apt-get install -y libicu-dev \
     && docker-php-ext-install intl
